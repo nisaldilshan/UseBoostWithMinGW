@@ -1,9 +1,15 @@
 # UseBoostWithMinGW
+
 This project shows how to use Boost libraries for your c++ projects and build for MinGW with cmake
+
+## Getting Started
 
 First you need to build boost libraries targeting MinGW, for that you can find instructions here.
   https://gist.github.com/sim642/29caef3cc8afaa273ce6
-  
+
+
+### Installing
+
 After that you need to create a CMakeLists.txt file and append boost include path and library path to "CMAKE_INCLUDE_PATH" and "CMAKE_LIBRARY_PATH".
 
 Then you can call "FIND_PACKAGE(Boost)" , if this failed please check above path variables or rebuild boost with matching configurations.
@@ -14,14 +20,26 @@ Finally you need to link your executables with relavant boost libraries (boost_s
 
 Refer to attached CMakeLists.txt file which links boost_chrono library with the target executable.
 
+## Deployment
+
 its better to have a separate build folder
+```
 mkdir build
+```
 
 Run Following commands to Generate CMake Project
+
+```
 cd build
 cmake .. -G "MinGW Makefiles"
+```
 
 Run following command to build your project
+```
 cmake --build .. 
-  or 
+```
+or 
+```
 mingw32-make
+```
+
