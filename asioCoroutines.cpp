@@ -29,20 +29,22 @@ struct task : boost::asio::coroutine
 {
     int i = 0;
 
-    void operator()()
+    int& operator()(int& num)
     {
         reenter (this)
         {
             while (i < 5)
             {
                 i++;
-                std::cout<< i <<std::endl;
-                yield;
+                yield std::cout<< "i = " << i <<std::endl;
                 i++;
-                std::cout<< i <<std::endl;
+                std::cout<< "i = " << i <<std::endl;
                 yield;
+                num++;
             }
         }
+
+        return i;
     }
 };
 
@@ -50,10 +52,12 @@ int main()
 {
     task t1;
 
+    int&& num = int(1);
+
     for (int i = 0; i < 10; i++)
     {
-        t1();
-        std::cout<< "from main" <<std::endl;
+        std::cout<< "from main, i : "<<std::endl<< t1(num) <<std::endl;
+        std::cout<< "from main, num : " << num <<std::endl;
     }
 
     return 0;

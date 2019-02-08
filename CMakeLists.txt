@@ -5,15 +5,16 @@ project(boost-helloworld)
 # SET(GCC_COVERAGE_COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
 # SET(GCC_COVERAGE_LINK_FLAGS    "-lboost_fiber -lboost_context")
 
-# SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
-# SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
+#-DBOOST_STACKTRACE_USE_WINDBG
+SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -DBOOST_STACKTRACE_USE_BACKTRACE -IC:\\dev\\stacktrace\\include")
+SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -LC:\\msys64\\mingw64\\lib")
 
-SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:\\Program Files\\boost\\include\\boost-1_66")
-SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:\\Program Files\\boost\\lib")
+#SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:\\dev\\stacktrace\\include")
+#SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:\\Program Files\\boost\\lib")
 
-FIND_PACKAGE(Boost)
+FIND_PACKAGE(Boost COMPONENTS chrono coroutine)
 IF (Boost_FOUND)
-    INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
+    INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR} )
     ADD_DEFINITIONS( "-DHAS_BOOST" )
 ENDIF()
 
@@ -25,20 +26,13 @@ ELSE()
     add_executable(coroutine2 coroutines.cpp)
     add_executable(asiocoroutine asioCoroutines.cpp)
     #add_executable(fiber fiber.cpp)
+    add_executable(stacktrace stacktrace.cpp)
 
-    target_link_libraries(chrono 
-    "C:/Program Files/boost/lib/libboost_chrono-mgw82-mt-x64-1_66.a" 
-    "C:/Program Files/boost/lib/libboost_system-mgw82-mt-x64-1_66.a"
-    )
 
-    target_link_libraries(coroutine2 
-    "C:/Program Files/boost/lib/libboost_coroutine-mgw82-mt-x64-1_66.a" 
-    "C:/Program Files/boost/lib/libboost_context-mgw82-mt-x64-1_66.a"
-    )
+    target_link_libraries(chrono ${Boost_LIBRARIES})
+    target_link_libraries(coroutine2 ${Boost_LIBRARIES})
+    target_link_libraries(stacktrace ${Boost_LIBRARIES} "C:\\msys64\\mingw64\\lib\\libbacktrace.a")
 
-    # target_link_libraries(fiber 
-    # "C:/Program Files/boost/lib/libboost_context-mgw82-mt-x64-1_66.a" 
-    # )
 ENDIF()
 
 
