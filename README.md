@@ -6,6 +6,11 @@ This project shows how to use Boost libraries for your c++ projects and build fo
 
 First you need to build boost libraries targeting MinGW, for that you can find instructions here.
   https://gist.github.com/sim642/29caef3cc8afaa273ce6
+  
+OR
+
+Can download boost libs directly using "pacboy"
+  https://github.com/boostorg/stacktrace/issues/14
 
 
 ### Installing
