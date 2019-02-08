@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cmath>
 #include <boost/chrono/chrono.hpp>
-#include <boost/coroutine2/all.hpp>
 
 int main()
 {
